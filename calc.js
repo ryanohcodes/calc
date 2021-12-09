@@ -6,7 +6,7 @@ function sub(a, b){
     return a - b;
 }
 
-function mul(a, b){
+function multi(a, b){
     return a * b;
 }
 
@@ -14,16 +14,55 @@ function divide(a, b){
     return a / b;
 }
 
+function operate(){
+    storeTwo = box.textContent;
+    storeTwo = parseFloat(storeTwo);
+    if (Boolean(plusOne) == true && Boolean(storeTwo) == true){
+        total = add(plusOne,storeTwo);
+    } else if (Boolean(minusOne) == true && Boolean(storeTwo) == true){
+        total = sub(minusOne,storeTwo);
+    } else if (Boolean(mulOne) == true && Boolean(storeTwo) == true){
+        total = multi(mulOne,storeTwo);
+    } else if (Boolean(diviOne) == true && Boolean(storeTwo) == true){
+        total = divide(diviOne,storeTwo);
+    }   
 
+    if (storeTwo == 0){
+        plusOne = '';
+        storeTwo = '';
+        minusOne = '';
+        mulOne = '';
+        diviOne = '';
+        box.textContent = 'Please dont divide by zer0. Please hit clear.';
+        return ;
+    }
 
+    plusOne = '';
+    storeTwo = '';
+    minusOne = '';
+    mulOne = '';
+    diviOne = '';
+    
+    box.textContent = total;
+}
+
+function equalEquivalent (){
+    if (Boolean(plusOne) == true || (Boolean(minusOne) == true) || (Boolean(mulOne) == true) || (Boolean(diviOne) == true)){
+        operate();
+    }
+}
 
 let calcInput = '';
 let display ='';
 let store = '';
-let storeOne = '';
+let plusOne = '';
 let storeTwo = '';
 let minusOne = '';
+let mulOne = '';
+let diviOne = '';
 let total = 0;
+let error = '';
+let calcText ='';
 
 
 const one = document.querySelector("#one");
@@ -36,10 +75,13 @@ const seven = document.querySelector("#seven");
 const eight = document.querySelector("#eight");
 const nine = document.querySelector("#nine");
 const zero = document.querySelector("#zero");
+const dot = document.querySelector("#dot");
 const clear = document.querySelector("#clear");
 const plus = document.querySelector("#plus");
 const equal = document.querySelector("#equal");
 const minus = document.querySelector("#minus");
+const mul = document.querySelector("#mul");
+const divi = document.querySelector("#divi");
 
 function extension(){
     if (box.textContent.length == 0){
@@ -53,32 +95,48 @@ function wipe(){
     box.textContent= '';
 };
 
+dot.addEventListener('click', (store)=>{
+    calcInput = dot.textContent;
+    calcText = box.textContent;
+    for (let i = 0; i < calcText.length; i++){
+        if (calcText[i] == '.'){
+            return ;
+        }
+    }
+    extension();
+});
+
 
 plus.addEventListener('click',(store)=>{
+    equalEquivalent ();
     store = box.textContent;
-    storeOne = parseInt(store);
+    plusOne = parseFloat(store);
     wipe();
 });
 
 minus.addEventListener('click',(store)=>{
+    equalEquivalent();
     store = box.textContent;
-    minusOne = parseInt(store);
+    minusOne = parseFloat(store);
     wipe();
 });
 
+mul.addEventListener('click',(store)=>{
+    equalEquivalent();
+    store = box.textContent;
+    mulOne = parseFloat(store);
+    wipe();
+});
+
+divi.addEventListener('click', (store)=>{
+    equalEquivalent();
+    store=box.textContent;
+    diviOne = parseFloat(store);
+    wipe();
+})
+
 equal.addEventListener('click',()=>{
-    storeTwo = box.textContent;
-    storeTwo = parseInt(storeTwo);
-    if (Boolean(storeOne) == true && Boolean(storeTwo) == true){
-        total = add(storeOne,storeTwo);
-    } else if (Boolean(minusOne) == true && Boolean(storeTwo) == true){
-        total = sub(minusOne,storeTwo);
-    }
-    storeOne = '';
-    storeTwo = '';
-    minuaOne = '';
-    
-    box.textContent = total;
+    operate();
 });
 
 clear.addEventListener('click', ()=>{
